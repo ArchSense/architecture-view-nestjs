@@ -4,6 +4,15 @@
   "displayName": "Architecture View NestJS",
   "description": "The architecture view for NestJS application",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArchSense/architecture-view-nestjs"
+  },
+  "bugs": {
+    "url": "https://github.com/ArchSense/architecture-view-nestjs/issues"
+  },
+  "preview": true,
+  "icon": "images/icon.png",
   "keywords": [
     "architecture",
     "visualization",
@@ -13,7 +22,7 @@
     "vscode": "^1.76.0"
   },
   "categories": [
-    "Other"
+    "Visualization"
   ],
   "activationEvents": [
     "onLanguage:typescript"
