@@ -3,7 +3,7 @@
   "publisher": "archsense",
   "displayName": "Architecture View NestJS",
   "description": "The architecture view for NestJS application",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/ArchSense/architecture-view-nestjs"
@@ -12,7 +12,7 @@
     "url": "https://github.com/ArchSense/architecture-view-nestjs/issues"
   },
   "preview": true,
-  "icon": "images/icon.png",
+  "icon": "images/icon-color.png",
   "keywords": [
     "architecture",
     "visualization",
