@@ -4,7 +4,7 @@ import { ACTIONS, send } from './services/bi';
 import { analyze } from './services/parser';
 
 export function activate(context: vscode.ExtensionContext) {
-  let disposable = vscode.commands.registerCommand('archsense.showArchitecture', async () => {
+  const disposable = vscode.commands.registerCommand('archsense.showArchitecture', async () => {
     send({ action: ACTIONS.start });
 
     const folders = vscode.workspace.workspaceFolders;
@@ -31,4 +31,5 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // This method is called when your extension is deactivated
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 export function deactivate() {}

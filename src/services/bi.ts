@@ -1,6 +1,6 @@
 export type BIEvent = {
   action: ACTIONS;
-  payload?: any;
+  payload?: unknown;
 };
 
 export enum ACTIONS {
