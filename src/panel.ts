@@ -43,7 +43,7 @@ export default class ArchitectureViewPanel {
       },
     );
 
-    this.webviewPanel.iconPath = vscode.Uri.joinPath(this.extensionUri, 'src/media', 'icon.png');
+    this.webviewPanel.iconPath = vscode.Uri.joinPath(this.extensionUri, 'images', 'icon-color.png');
     this.webviewPanel.webview.html = this._getHtmlForWebview(this.webviewPanel.webview);
     this.webviewPanel.onDidDispose(() => this.dispose(), null, this._disposables);
 
