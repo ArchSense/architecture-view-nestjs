@@ -130,12 +130,6 @@ const Scene = ({ data, onNodeEnter, onNodeSelect, onViewChange, view }: ScenePro
         onEdgesChange={onEdgesChange}
         onSelectionChange={onSelectionChangeHandler}
         onNodeDoubleClick={onDoubleClickHandler}
-        defaultViewport={{
-          x: 100,
-          y: 100,
-          zoom: 0.2
-        }}
-        // fitView
       >
         <MiniMap pannable />
         <Controls showZoom />
