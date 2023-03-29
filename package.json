@@ -49,6 +49,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
+    "@types/dagre": "^0.7.48",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
@@ -75,8 +76,10 @@
   "dependencies": {
     "@archsense/scout": "^0.1.6",
     "@rottitime/react-hook-message-event": "^1.0.10",
+    "dagre": "^0.8.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "reactflow": "^11.7.0"
   },
   "prettier": {
     "bracketSpacing": true,

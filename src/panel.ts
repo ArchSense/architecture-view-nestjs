@@ -3,13 +3,17 @@ import * as vscode from 'vscode';
 import { webviewTabTitle } from './consts';
 import { getNonce } from './utils';
 
+type InitCallback = () => void;
+
 export default class ArchitectureViewPanel {
   public static currentPanel: ArchitectureViewPanel | undefined;
 
   private static readonly viewType = 'archsense';
 
-  private readonly _panel: vscode.WebviewPanel;
-  private readonly _extensionUri: vscode.Uri;
+  private isAppLoaded = false;
+  private initCallbacks: InitCallback[] = [];
+  private readonly webviewPanel: vscode.WebviewPanel;
+  private readonly extensionUri: vscode.Uri;
   private _disposables: vscode.Disposable[] = [];
 
   public static createOrShow(extContext: vscode.ExtensionContext) {
@@ -17,7 +21,7 @@ export default class ArchitectureViewPanel {
       ? vscode.window.activeTextEditor.viewColumn
       : undefined;
     if (ArchitectureViewPanel.currentPanel) {
-      ArchitectureViewPanel.currentPanel._panel.reveal(column);
+      ArchitectureViewPanel.currentPanel.webviewPanel.reveal(column);
     } else {
       ArchitectureViewPanel.currentPanel = new ArchitectureViewPanel(
         extContext.extensionUri,
@@ -28,26 +32,27 @@ export default class ArchitectureViewPanel {
   }
 
   private constructor(extensionPath: vscode.Uri, column: vscode.ViewColumn) {
-    this._extensionUri = extensionPath;
-    this._panel = vscode.window.createWebviewPanel(
+    this.extensionUri = extensionPath;
+    this.webviewPanel = vscode.window.createWebviewPanel(
       ArchitectureViewPanel.viewType,
       webviewTabTitle,
       column,
       {
         enableScripts: true,
-        localResourceRoots: [this._extensionUri],
+        localResourceRoots: [this.extensionUri],
       },
     );
 
-    this._panel.webview.html = this._getHtmlForWebview(this._panel.webview);
-    this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
+    this.webviewPanel.iconPath = vscode.Uri.joinPath(this.extensionUri, 'src/media', 'icon.png');
+    this.webviewPanel.webview.html = this._getHtmlForWebview(this.webviewPanel.webview);
+    this.webviewPanel.onDidDispose(() => this.dispose(), null, this._disposables);
 
     // Handle messages from the webview
-    this._panel.webview.onDidReceiveMessage(
+    this.webviewPanel.webview.onDidReceiveMessage(
       (message) => {
         switch (message.type) {
           case 'startup':
-            console.log('The webview is up');
+            this.flushInitCallbacks();
             return;
         }
       },
@@ -56,13 +61,31 @@ export default class ArchitectureViewPanel {
     );
   }
 
+  private flushInitCallbacks = async () => {
+    console.log('App content is loaded');
+    console.log(`Flashing ${this.initCallbacks.length} init callbacks`);
+    this.isAppLoaded = true;
+    for (const cb of this.initCallbacks) {
+      await cb();
+    }
+    this.initCallbacks = [];
+  };
+
+  public onInit(cb: InitCallback) {
+    if (this.isAppLoaded) {
+      cb();
+    } else {
+      this.initCallbacks.push(cb);
+    }
+  }
+
   public sendAnalysisResult(data: AnalysisResult) {
-    this._panel.webview.postMessage({ type: 'analysis', payload: data });
+    this.webviewPanel.webview.postMessage({ type: 'analysis', payload: data });
   }
 
   public dispose() {
     ArchitectureViewPanel.currentPanel = undefined;
-    this._panel.dispose();
+    this.webviewPanel.dispose();
 
     while (this._disposables.length) {
       const x = this._disposables.pop();
@@ -74,7 +97,7 @@ export default class ArchitectureViewPanel {
 
   private _getHtmlForWebview(webview: vscode.Webview) {
     const scriptUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, 'out', 'main.wv.js'),
+      vscode.Uri.joinPath(this.extensionUri, 'out', 'main.wv.js'),
     );
 
     const nonce = getNonce();

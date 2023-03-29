@@ -18,9 +18,10 @@ export function activate(context: vscode.ExtensionContext) {
       send({ action: ACTIONS.parserStart });
       const analysis = await analyze(rootFolder.uri.path);
       send({ action: ACTIONS.parserSuccess, payload: analysis });
-
       const currentView = ArchitectureViewPanel.createOrShow(context);
-      currentView.sendAnalysisResult(analysis);
+      currentView.onInit(() => {
+        currentView.sendAnalysisResult(analysis);
+      });
     } catch (error) {
       send({ action: ACTIONS.parserError, payload: error });
       vscode.window.showErrorMessage('Archsense: could not build analysis');
