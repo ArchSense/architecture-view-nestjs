@@ -1,10 +1,10 @@
-import * as React from 'react';
-import useMessage from '@rottitime/react-hook-message-event';
-import { useCallback, useEffect, useState } from 'react';
-import Scene from './Scene/Scene';
-import { getNextLevel, Levels } from '../services/levels';
 import { AnalysisResult } from '@archsense/scout';
+import useMessage from '@rottitime/react-hook-message-event';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+import { getNextLevel, Levels } from '../services/levels';
+import Scene from './Scene/Scene';
 
 const App = () => {
   useMessage('analysis', (_, payload) => {
