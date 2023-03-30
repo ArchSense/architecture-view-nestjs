@@ -2,6 +2,11 @@
 
 All notable changes to the "archsense" extension will be documented in this file.
 
+## [0.2.4] - 2023-03-30
+
+- Open a source file on component click [#5](https://github.com/ArchSense/architecture-view-nestjs/issues/5)
+- Fix bug [#6](https://github.com/ArchSense/architecture-view-nestjs/issues/6)
+
 ## [0.2.3] - 2023-03-29
 
 - Fix icons
