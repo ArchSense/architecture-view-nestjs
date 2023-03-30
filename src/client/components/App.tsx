@@ -26,7 +26,7 @@ const App = () => {
     }
   }, [analysis]);
 
-  const onNodeEnterHandler = useCallback((nodeId: string) => {
+  const onNodeEnterHandler = (nodeId: string) => {
     const nextView = getNextLevel(activeView);
     if (!nextView) {
       return;
@@ -35,13 +35,12 @@ const App = () => {
       setSelectedServiceId(nodeId);
     }
     setActiveView(nextView);
-  }, []);
+  };
 
   const onNodeSelect = useDebouncedCallback((nodeId: string) => {
-    console.log(nodeId);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).vscode.postMessage({ type: 'openFile', payload: nodeId });
-  }, 150);
+  }, 50);
 
   const getSceneData = () => {
     switch (activeView) {
@@ -63,7 +62,7 @@ const App = () => {
       <Scene
         data={getSceneData()}
         onNodeEnter={onNodeEnterHandler}
-        onNodeSelect={(nodeId) => onNodeSelect(nodeId)}
+        onNodeSelect={onNodeSelect}
         onViewChange={setActiveView}
         view={activeView}
       />

@@ -8,6 +8,7 @@ export enum BI_ACTIONS {
   parserStart = 'runScout',
   parserSuccess = 'runScoutSuccess',
   parserError = 'runScoutError',
+  clientStart = 'clientStart',
   openFile = 'openFile',
 }
 

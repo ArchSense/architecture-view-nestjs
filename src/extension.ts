@@ -22,6 +22,9 @@ export function activate(context: vscode.ExtensionContext) {
       currentView.onInit(() => {
         currentView.sendAnalysisResult(analysis);
       });
+      currentView.onActivate(() => {
+        currentView.sendAnalysisResult(analysis);
+      });
     } catch (error) {
       send({ action: BI_ACTIONS.parserError, payload: error });
       vscode.window.showErrorMessage('Archsense: could not build analysis');
@@ -33,4 +36,4 @@ export function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-export function deactivate() {}
+export function deactivate() { }

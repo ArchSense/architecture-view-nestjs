@@ -24,6 +24,7 @@ export default class ArchitectureViewPanel {
 
   private isAppLoaded = false;
   private initCallbacks: InitCallback[] = [];
+  private activateCallbacks: InitCallback[] = [];
   private readonly webviewPanel: vscode.WebviewPanel;
   private readonly extensionUri: vscode.Uri;
   private _disposables: vscode.Disposable[] = [];
@@ -67,20 +68,30 @@ export default class ArchitectureViewPanel {
     );
   }
 
-  private flushInitCallbacks = async () => {
-    console.log('App content is loaded');
+  private async flushInitCallbacks() {
+    send({action: BI_ACTIONS.clientStart});
     console.log(`Flashing ${this.initCallbacks.length} init callbacks`);
     this.isAppLoaded = true;
     for (const cb of this.initCallbacks) {
       await cb();
     }
     this.initCallbacks = [];
-  };
+  }
+
+  private async flushActivateCallbacks() {
+    for (const cb of this.activateCallbacks) {
+      await cb();
+    }
+  }
 
   private handleIncomingMessage(message: Message) {
     switch (message.type) {
       case MessageType.startup:
-        this.flushInitCallbacks();
+        if (!this.isAppLoaded) {
+          this.flushInitCallbacks();
+        } else {
+          this.flushActivateCallbacks();
+        }
         return;
       case MessageType.openFile:
         this.openFileHandler(message.payload as string);
@@ -94,11 +105,7 @@ export default class ArchitectureViewPanel {
     send({ action: BI_ACTIONS.openFile, payload: filePath });
     const fileUri = vscode.Uri.parse(filePath);
     const fileIsAlreadyOpen = () => {
-      return vscode.window.visibleTextEditors.some((editor: vscode.TextEditor) => {
-        console.log(editor.document.uri.fsPath);
-        console.log(filePath);
-        return editor.document.uri.fsPath === filePath;
-      });
+      return vscode.window.visibleTextEditors.some((editor: vscode.TextEditor) => editor.document.uri.fsPath === filePath);
     };
     if (!fileIsAlreadyOpen()) {
       vscode.window.showTextDocument(fileUri, {
@@ -117,6 +124,10 @@ export default class ArchitectureViewPanel {
     } else {
       this.initCallbacks.push(cb);
     }
+  }
+
+  public onActivate(cb: InitCallback) {
+    this.activateCallbacks.push(cb);
   }
 
   public sendAnalysisResult(data: AnalysisResult) {
