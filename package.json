@@ -45,7 +45,7 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint ./src",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"*.md\"" ,
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"*.md\"",
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
@@ -79,7 +79,8 @@
     "dagre": "^0.8.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "reactflow": "^11.7.0"
+    "reactflow": "^11.7.0",
+    "use-debounce": "^9.0.3"
   },
   "prettier": {
     "bracketSpacing": true,

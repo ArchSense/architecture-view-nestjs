@@ -1,9 +1,21 @@
 import { AnalysisResult } from '@archsense/scout';
 import * as vscode from 'vscode';
 import { webviewTabTitle } from './consts';
+import { BI_ACTIONS, send } from './services/bi';
 import { getNonce } from './utils';
 
 type InitCallback = () => void;
+
+enum MessageType {
+  analysis = 'analysis',
+  startup = 'startup',
+  openFile = 'openFile',
+}
+
+type Message = {
+  type: MessageType;
+  payload: unknown;
+};
 
 export default class ArchitectureViewPanel {
   public static currentPanel: ArchitectureViewPanel | undefined;
@@ -49,14 +61,8 @@ export default class ArchitectureViewPanel {
 
     // Handle messages from the webview
     this.webviewPanel.webview.onDidReceiveMessage(
-      (message) => {
-        switch (message.type) {
-          case 'startup':
-            this.flushInitCallbacks();
-            return;
-        }
-      },
-      null,
+      this.handleIncomingMessage,
+      this,
       this._disposables,
     );
   }
@@ -71,6 +77,40 @@ export default class ArchitectureViewPanel {
     this.initCallbacks = [];
   };
 
+  private handleIncomingMessage(message: Message) {
+    switch (message.type) {
+      case MessageType.startup:
+        this.flushInitCallbacks();
+        return;
+      case MessageType.openFile:
+        this.openFileHandler(message.payload as string);
+        return;
+      default:
+        console.log(`Unknown message received ${message.type}`);
+    }
+  }
+
+  private openFileHandler(filePath: string) {
+    send({ action: BI_ACTIONS.openFile, payload: filePath });
+    const fileUri = vscode.Uri.parse(filePath);
+    const fileIsAlreadyOpen = () => {
+      return vscode.window.visibleTextEditors.some((editor: vscode.TextEditor) => {
+        console.log(editor.document.uri.fsPath);
+        console.log(filePath);
+        return editor.document.uri.fsPath === filePath;
+      });
+    };
+    if (!fileIsAlreadyOpen()) {
+      vscode.window.showTextDocument(fileUri, {
+        viewColumn: vscode.ViewColumn.Beside,
+      });
+    }
+  }
+
+  private sendOutcomingMessage(message: Message) {
+    this.webviewPanel.webview.postMessage(message);
+  }
+
   public onInit(cb: InitCallback) {
     if (this.isAppLoaded) {
       cb();
@@ -80,7 +120,7 @@ export default class ArchitectureViewPanel {
   }
 
   public sendAnalysisResult(data: AnalysisResult) {
-    this.webviewPanel.webview.postMessage({ type: 'analysis', payload: data });
+    this.sendOutcomingMessage({ type: MessageType.analysis, payload: data });
   }
 
   public dispose() {

@@ -111,7 +111,7 @@ const Scene = ({ data, onNodeEnter, onNodeSelect, onViewChange, view }: ScenePro
     ({ nodes }) => {
       const selectedNode = nodes[0];
       selectedNode ? highlightEdges(selectedNode) : removeHighlightEdges();
-      onNodeSelect && onNodeSelect(selectedNode);
+      selectedNode && onNodeSelect && onNodeSelect(selectedNode.id);
     },
     [highlightEdges, removeHighlightEdges, onNodeSelect],
   );

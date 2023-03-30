@@ -1,9 +1,10 @@
 import * as React from 'react';
 import useMessage from '@rottitime/react-hook-message-event';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Scene from './Scene/Scene';
 import { getNextLevel, Levels } from '../services/levels';
 import { AnalysisResult } from '@archsense/scout';
+import { useDebouncedCallback } from 'use-debounce';
 
 const App = () => {
   useMessage('analysis', (_, payload) => {
@@ -25,7 +26,7 @@ const App = () => {
     }
   }, [analysis]);
 
-  const onNodeEnterHandler = (nodeId: string) => {
+  const onNodeEnterHandler = useCallback((nodeId: string) => {
     const nextView = getNextLevel(activeView);
     if (!nextView) {
       return;
@@ -34,7 +35,13 @@ const App = () => {
       setSelectedServiceId(nodeId);
     }
     setActiveView(nextView);
-  };
+  }, []);
+
+  const onNodeSelect = useDebouncedCallback((nodeId: string) => {
+    console.log(nodeId);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).vscode.postMessage({ type: 'openFile', payload: nodeId });
+  }, 150);
 
   const getSceneData = () => {
     switch (activeView) {
@@ -56,7 +63,7 @@ const App = () => {
       <Scene
         data={getSceneData()}
         onNodeEnter={onNodeEnterHandler}
-        onNodeSelect={console.log}
+        onNodeSelect={(nodeId) => onNodeSelect(nodeId)}
         onViewChange={setActiveView}
         view={activeView}
       />

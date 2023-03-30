@@ -1,13 +1,14 @@
 export type BIEvent = {
-  action: ACTIONS;
+  action: BI_ACTIONS;
   payload?: unknown;
 };
 
-export enum ACTIONS {
+export enum BI_ACTIONS {
   start = 'showArchitectureCommand',
   parserStart = 'runScout',
   parserSuccess = 'runScoutSuccess',
   parserError = 'runScoutError',
+  openFile = 'openFile',
 }
 
 // TODO User telemetry
