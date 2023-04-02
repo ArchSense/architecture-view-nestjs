@@ -12,6 +12,10 @@ Visualize the architecture of your NestJs application.
   <a href="https://marketplace.visualstudio.com/items?itemName=archsense.architecture-view-nestjs">
     <img src="https://github.com/archsense/architecture-view-nestjs/actions/workflows/build.yaml/badge.svg">
   </a>
+  <br />
+  <a href="https://ko-fi.com/archsense" target="_blank">
+    <img src="https://img.shields.io/badge/Donate-ff3f59.svg"/>
+  </a>
 </p>
 <br>
 
