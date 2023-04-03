@@ -1,4 +1,4 @@
-name: 'Build'
+name: 'Build & Test'
 
 on: 
   push:
@@ -17,3 +17,12 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run compile
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm test

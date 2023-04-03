@@ -69,7 +69,7 @@ export default class ArchitectureViewPanel {
   }
 
   private async flushInitCallbacks() {
-    send({action: BI_ACTIONS.clientStart});
+    send({ action: BI_ACTIONS.clientStart });
     console.log(`Flashing ${this.initCallbacks.length} init callbacks`);
     this.isAppLoaded = true;
     for (const cb of this.initCallbacks) {
@@ -105,7 +105,9 @@ export default class ArchitectureViewPanel {
     send({ action: BI_ACTIONS.openFile, payload: filePath });
     const fileUri = vscode.Uri.parse(filePath);
     const fileIsAlreadyOpen = () => {
-      return vscode.window.visibleTextEditors.some((editor: vscode.TextEditor) => editor.document.uri.fsPath === filePath);
+      return vscode.window.visibleTextEditors.some(
+        (editor: vscode.TextEditor) => editor.document.uri.fsPath === filePath,
+      );
     };
     if (!fileIsAlreadyOpen()) {
       vscode.window.showTextDocument(fileUri, {

@@ -2,12 +2,15 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "ES2020",
+		"types": [
+			"node", 
+		],
 		"lib": [
 			"ES2020",
 			"DOM"
 		],
 		"sourceMap": true,
-		"rootDir": "src",
+		"rootDirs": ["src", "test"],
 		"jsx": "react",
 		"strict": true,   /* enable all strict type-checking options */
 		/* Additional Checks */
@@ -20,5 +23,8 @@
 		"node_modules",
 		".vscode-test",
 		"src/client",
+		"test-fixtures/*",
+		"test/e2e/*",
+		"*.conf.ts"
 	]
 }
