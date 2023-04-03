@@ -4,11 +4,13 @@
 		"target": "ES2020",
 		"types": [
 			"node", 
+			"expect-webdriverio",
 		],
 		"lib": [
 			"ES2020",
 			"DOM"
 		],
+		"moduleResolution": "node",
 		"sourceMap": true,
 		"rootDirs": ["src", "test"],
 		"jsx": "react",
@@ -24,7 +26,7 @@
 		".vscode-test",
 		"src/client",
 		"test-fixtures/*",
-		"test/e2e/*",
+		"test/e2e",
 		"*.conf.ts"
 	]
 }
