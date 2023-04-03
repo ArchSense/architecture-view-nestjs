@@ -26,14 +26,14 @@ const App = () => {
     }
   }, [analysis]);
 
-  const onNodeEnterHandler = (nodeId: string) => {
+  const onNodeEnterHandler = () => {
     const nextView = getNextLevel(activeView);
     if (!nextView) {
       return;
     }
-    if (activeView === Levels.Services) {
-      setSelectedServiceId(nodeId);
-    }
+    // if (activeView === Levels.Services) {
+    //   setSelectedServiceId(nodeId);
+    // }
     setActiveView(nextView);
   };
 
@@ -50,8 +50,8 @@ const App = () => {
           return analysis[selectedServiceId].components;
         }
         return {};
-      case Levels.Services:
-        return analysis;
+      // case Levels.Services:
+      //   return analysis;
       default:
         return {};
     }
