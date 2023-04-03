@@ -42,7 +42,7 @@
     "watch": "webpack --watch",
     "package": "webpack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
-    "pretest": "npm run compile-tests && npm run compile",
+    "pretest": "npm run compile && npm run compile-tests",
     "lint": "eslint ./src",
     "format": "prettier --write \"{src,test}/**/*.{ts,tsx} \"*.md\"",
     "test:unit": "node ./out/test/runTest.js",
