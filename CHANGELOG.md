@@ -2,6 +2,9 @@
 
 All notable changes to the "archsense" extension will be documented in this file.
 
+## [0.3.1] - 2023-04-03
+ - Update layers in view
+
 ## [0.3.0] - 2023-04-03
  - Support of monorepo [#3](https://github.com/ArchSense/architecture-view-nestjs/issues/3)
 
