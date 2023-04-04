@@ -16,9 +16,12 @@ Visualize the architecture of your NestJs application.
 </p>
 <br>
 
-![Demo](./images/demo.gif)
 
-## How to use
+![Why](./images/meme.jpg)
+
+## Usage
+
+![Demo](./images/demo.gif)
 
 Inside the opened NestJs application in your workspace, run the following command from the pallette:
 
