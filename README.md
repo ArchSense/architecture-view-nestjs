@@ -25,8 +25,11 @@ Inside the opened NestJs application in your workspace, run the following comman
 ```
 > Show architecture
 ```
+
 ## Credits
-* [Architecture icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/architecture)
+
+- [Architecture icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/architecture)
 
 ## License
+
 [MIT](/LICENSE)

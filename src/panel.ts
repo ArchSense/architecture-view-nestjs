@@ -1,7 +1,7 @@
 import { AnalysisResult } from '@archsense/scout';
 import * as vscode from 'vscode';
 import { webviewTabTitle } from './consts';
-import { BI_ACTIONS, send } from './services/bi';
+import { BI_ACTIONS, sendEvent } from './services/bi';
 import { getNonce } from './utils';
 
 type InitCallback = () => void;
@@ -69,7 +69,7 @@ export default class ArchitectureViewPanel {
   }
 
   private async flushInitCallbacks() {
-    send({ action: BI_ACTIONS.clientStart });
+    sendEvent({ action: BI_ACTIONS.clientStart });
     console.log(`Flashing ${this.initCallbacks.length} init callbacks`);
     this.isAppLoaded = true;
     for (const cb of this.initCallbacks) {
@@ -102,7 +102,7 @@ export default class ArchitectureViewPanel {
   }
 
   private openFileHandler(filePath: string) {
-    send({ action: BI_ACTIONS.openFile, payload: filePath });
+    sendEvent({ action: BI_ACTIONS.openFile, payload: filePath });
     const fileUri = vscode.Uri.parse(filePath);
     const fileIsAlreadyOpen = () => {
       return vscode.window.visibleTextEditors.some(

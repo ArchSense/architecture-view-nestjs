@@ -1,3 +1,6 @@
+import TelemetryReporter from '@vscode/extension-telemetry';
+import { telemetryInstrumentationKey } from '../consts';
+
 export type BIEvent = {
   action: BI_ACTIONS;
   payload?: unknown;
@@ -12,11 +15,23 @@ export enum BI_ACTIONS {
   openFile = 'openFile',
 }
 
-// TODO User telemetry
-// https://code.visualstudio.com/api/extension-guides/telemetry
-export const send = (event: BIEvent) => {
+let reporter: TelemetryReporter;
+
+const log = (event: BIEvent) => {
   console.log(`BI: ${event.action}`);
   if (event.payload) {
     console.log(event.payload);
+  }
+};
+
+export const initReporter = () => {
+  reporter = new TelemetryReporter(telemetryInstrumentationKey);
+  return reporter;
+};
+
+export const sendEvent = (event: BIEvent) => {
+  log(event);
+  if (reporter) {
+    reporter.sendTelemetryEvent(event.action);
   }
 };
