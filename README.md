@@ -16,7 +16,6 @@ Visualize the architecture of your NestJs application.
 </p>
 <br>
 
-
 ![Why](./images/meme.jpg)
 
 ## Usage

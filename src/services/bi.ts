@@ -35,3 +35,10 @@ export const sendEvent = (event: BIEvent) => {
     reporter.sendTelemetryEvent(event.action);
   }
 };
+
+export const sendException = (error: Error) => {
+  console.error(error);
+  if (reporter) {
+    reporter.sendTelemetryException(error);
+  }
+};
