@@ -4,11 +4,13 @@ import { buildEdge } from './Edge/Edge';
 import { buildAbstractNode, buildActualNode } from './Node/Node';
 
 const isModule = (fileName) => fileName.endsWith('.module');
+const isDto = (fileName) => fileName.endsWith('.dto');
 const hasPublicMethods = (exports) => exports.length > 0;
 
 const sanitizeComponents = (components): Array<any> => {
   return Object.values(components)
     .filter((component: any) => hasPublicMethods(component.exports))
+    .filter((component: any) => !isDto(component.name))
     .filter((component: any) => !isModule(component.name));
 };
 
