@@ -17,7 +17,6 @@ describe('Architecture view extension', () => {
     await archWebview.open();
     const nodes = await $$('.react-flow__node-actual');
     expect(nodes.length).toBe(7);
-    await browser.debug();
     const nodesText = await Promise.all(nodes.map(node => node.getText()));
     expect(nodesText).toContain('AppController\ngetHello');
   });

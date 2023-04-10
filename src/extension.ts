@@ -3,6 +3,7 @@ import ArchitectureViewPanel from './panel';
 import { BI_ACTIONS, initReporter, sendEvent, sendException } from './services/bi';
 import { analyze } from './services/parser';
 import { nestJsMainGlobPattern, notifications, quickPickerPlaceholder } from './consts';
+import { sep } from 'path';
 
 export function activate(context: vscode.ExtensionContext) {
   const reporter = initReporter();
@@ -19,9 +20,9 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const rootFoldersMap = roots.reduce((acc, curr) => {
-        const parts = curr.path.split('/');
+        const parts = curr.path.split(sep);
         const rootFolderName = parts.at(-3) as string;
-        const rootFolderPath = parts.slice(0, -2).join('/');
+        const rootFolderPath = parts.slice(0, -2).join(sep);
         acc[rootFolderName] = rootFolderPath;
         return acc;
       }, {});
@@ -66,4 +67,4 @@ export function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-export function deactivate() {}
+export function deactivate() { }
