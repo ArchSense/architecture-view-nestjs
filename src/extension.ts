@@ -27,6 +27,8 @@ export function activate(context: vscode.ExtensionContext) {
         return acc;
       }, {});
 
+      console.log(rootFoldersMap);
+
       let rootFolderPath = Object.values(rootFoldersMap)[0] as string;
 
       if (Object.values(rootFoldersMap).length > 1) {
