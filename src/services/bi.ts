@@ -20,7 +20,7 @@ let reporter: TelemetryReporter;
 const log = (event: BIEvent) => {
   console.log(`BI: ${event.action}`);
   if (event.payload) {
-    console.log(event.payload);
+    console.log(JSON.stringify(event.payload));
   }
 };
 
