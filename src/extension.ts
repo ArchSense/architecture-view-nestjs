@@ -20,14 +20,12 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const rootFoldersMap = roots.reduce((acc, curr) => {
-        const parts = curr.path.split(sep);
+        const parts = curr.fsPath.split(sep);
         const rootFolderName = parts.at(-3) as string;
         const rootFolderPath = parts.slice(0, -2).join(sep);
         acc[rootFolderName] = rootFolderPath;
         return acc;
       }, {});
-
-      console.log(rootFoldersMap);
 
       let rootFolderPath = Object.values(rootFoldersMap)[0] as string;
 

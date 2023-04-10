@@ -103,7 +103,7 @@ export default class ArchitectureViewPanel {
 
   private openFileHandler(filePath: string) {
     sendEvent({ action: BI_ACTIONS.openFile, payload: filePath });
-    const fileUri = vscode.Uri.parse(filePath);
+    const fileUri = vscode.Uri.file(filePath);
     const fileIsAlreadyOpen = () => {
       return vscode.window.visibleTextEditors.some(
         (editor: vscode.TextEditor) => editor.document.uri.fsPath === filePath,
