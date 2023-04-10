@@ -14,6 +14,7 @@ describe('Architecture view extension', () => {
     await browser.pause(500);
     const archWebview = await workbench.getWebviewByTitle('Architecture View');
     await archWebview.open();
+    await browser.pause(500);
     const nodes = await $$('.react-flow__node-actual');
     expect(nodes.length).toBe(7);
     const nodesText = await Promise.all(nodes.map((node) => node.getText()));
