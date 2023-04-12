@@ -43,11 +43,11 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       try {
+        const currentView = ArchitectureViewPanel.createOrShow(context);
         sendEvent({ action: BI_ACTIONS.parserStart });
         const analysis = await analyze(rootFolderPath);
         sendEvent({ action: BI_ACTIONS.parserSuccess, payload: analysis });
         vscode.window.showInformationMessage(notifications.analysisSuccess);
-        const currentView = ArchitectureViewPanel.createOrShow(context);
         currentView.onInit(() => {
           currentView.sendAnalysisResult(analysis);
         });

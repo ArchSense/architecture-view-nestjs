@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { getNextLevel, Levels } from '../services/levels';
 import Scene from './Scene/Scene';
+import { FullScreenLoader } from './Loader/Loader';
 
 const App = () => {
   useMessage('analysis', (_, payload) => {
@@ -56,6 +57,12 @@ const App = () => {
         return {};
     }
   };
+
+  if (!analysis) {
+    return (
+      <FullScreenLoader />
+    )
+  }
 
   return (
     analysis && (
