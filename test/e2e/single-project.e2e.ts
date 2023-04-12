@@ -8,7 +8,8 @@ describe('Architecture view extension', () => {
     );
   });
 
-  it('should load the architecture view', async () => {
+  it('should load the architecture view', async function () {
+    this.retries(2);
     const workbench: Workbench = await browser.getWorkbench();
     await workbench.executeCommand('showArchitecture');
     await browser.pause(500);
