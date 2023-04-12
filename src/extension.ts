@@ -46,13 +46,18 @@ export function activate(context: vscode.ExtensionContext) {
       try {
         const currentView = ArchitectureViewPanel.createOrShow(context);
         currentView.sendAnalysisResult(null);
-        const measurementToken = sendEvent({ action: BI_ACTIONS.parserStart });
+
+        const measurementToken = sendEvent({ action: BI_ACTIONS.parserStart }) as symbol;
         const analysis = await analyze(rootFolderPath);
+
         sendEvent({ action: BI_ACTIONS.parserSuccess, measurementToken, payload: analysis });
+
         vscode.window.showInformationMessage(notifications.analysisSuccess);
+
         currentView.onInit(() => {
           currentView.sendAnalysisResult(analysis);
         });
+
         currentView.onActivate(() => {
           currentView.sendAnalysisResult(analysis);
         });
@@ -68,7 +73,6 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // This method is called when your extension is deactivated
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 export function deactivate() {
   clearAllMeasurement();
 }
