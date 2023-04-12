@@ -132,7 +132,7 @@ export default class ArchitectureViewPanel {
     this.activateCallbacks.push(cb);
   }
 
-  public sendAnalysisResult(data: AnalysisResult) {
+  public sendAnalysisResult(data: AnalysisResult | null) {
     this.sendOutcomingMessage({ type: MessageType.analysis, payload: data });
   }
 

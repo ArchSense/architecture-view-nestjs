@@ -1,6 +1,12 @@
 # Change Log
 
-All notable changes to the "archsense" extension will be documented in this file.
+All notable changes to the "architecture-view-nestjs" extension will be documented in this file.
+
+## [0.5.0] - 2023-04-12
+
+- feat(parser): Support absolute and paths from ts config [#15](https://github.com/ArchSense/architecture-view-nestjs/issues/15)
+- feat(ui): add loader for longer parsing
+- infra(telemetry): report parser duration
 
 ## [0.4.3] - 2023-04-10
 

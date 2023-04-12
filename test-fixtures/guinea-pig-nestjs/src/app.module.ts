@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common';
 import { OpenTelemetryModule } from 'nestjs-otel';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { InvoicesModule } from './invoices/invoices.module';
+import { InvoicesModule } from '@invoices/invoices.module';
+// import { InvoicesModule } from './invoices/invoices.module';
 
 const OpenTelemetryModuleConfig = OpenTelemetryModule.forRoot({
   metrics: {
