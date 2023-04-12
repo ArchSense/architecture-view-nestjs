@@ -59,9 +59,7 @@ const App = () => {
   };
 
   if (!analysis) {
-    return (
-      <FullScreenLoader />
-    )
+    return <FullScreenLoader />;
   }
 
   return (

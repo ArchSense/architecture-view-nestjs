@@ -1,9 +1,11 @@
 import TelemetryReporter from '@vscode/extension-telemetry';
 import { telemetryInstrumentationKey } from '../consts';
+import { addNewMeasurement, calculateMeasurement } from './measurements';
 
 export type BIEvent = {
   action: BI_ACTIONS;
   payload?: unknown;
+  measurementToken?: symbol;
 };
 
 export enum BI_ACTIONS {
@@ -22,6 +24,23 @@ const log = (event: BIEvent) => {
   if (event.payload) {
     console.log(JSON.stringify(event.payload));
   }
+  const measurements = getMeasurements(event);
+  if (measurements) {
+    console.log(`${event.action} took ${measurements.duration} seconds`);
+  }
+};
+
+const getMeasurements = (event: BIEvent): { [key: string]: number } | undefined => {
+  if (!event.measurementToken) {
+    return;
+  }
+  const duration = calculateMeasurement(event.measurementToken);
+  if (!duration) {
+    return;
+  }
+  return {
+    duration,
+  };
 };
 
 export const initReporter = () => {
@@ -29,10 +48,13 @@ export const initReporter = () => {
   return reporter;
 };
 
-export const sendEvent = (event: BIEvent) => {
+export const sendEvent = (event: BIEvent): symbol | undefined => {
   log(event);
   if (reporter) {
-    reporter.sendTelemetryEvent(event.action);
+    reporter.sendTelemetryEvent(event.action, undefined, getMeasurements(event));
+  }
+  if (!event.measurementToken) {
+    return addNewMeasurement();
   }
 };
 

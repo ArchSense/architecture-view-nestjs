@@ -7,19 +7,16 @@ export const FullScreenLoader = () => {
   const [shouldShowMessage, setShouldShowMessage] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShouldShowMessage(true), 5000);
+    const timer = setTimeout(() => setShouldShowMessage(true), 3000);
     return () => {
       clearTimeout(timer);
-    }
+    };
   }, []);
 
   return (
     <div className="loader-container__full-screen">
       <VSCodeProgressRing />
-      {
-        shouldShowMessage &&
-        <p>Looks like it takes longer than we expected...</p>
-      }
+      {shouldShowMessage && <p>Looks like it takes longer than we expected...</p>}
     </div>
-  )
+  );
 };

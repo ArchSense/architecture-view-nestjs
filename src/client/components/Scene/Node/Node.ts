@@ -8,6 +8,7 @@ const paintClass = (fileName) => {
   const type = parts.at(-1) ? parts.at(-1).toLowerCase() : void 0;
   switch (type) {
     case 'controller':
+    case 'resolver':
       return '#3b5bdbbf';
     case 'service':
       return '#3cd93cbd';
